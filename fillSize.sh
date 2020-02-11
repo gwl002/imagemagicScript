@@ -7,7 +7,7 @@ for folder in `ls | grep "H*tiles"`;do
 		ratio=`identify "${folder}/${image}" | cut -d " " -f 3`
 		if [ "$ratio" != "128x128" ];then
 			echo $ratio
-			convert "${folder}/${image}" -background transparent -gravity NorthWest -extent 256x256 "${folder}/${image}"
+			convert "${folder}/${image}" -background transparent -gravity NorthWest -extent 512x512 "${folder}/${image}"
 		fi 
 	done
 done

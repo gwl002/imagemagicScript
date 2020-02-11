@@ -1,9 +1,8 @@
 #! /bin/bash
 INDEX=1
-# IMAGE_WIDTH=10752
-# IMAGE_HEIGHT=21504
-IMAGE_WIDTH=1898
-IMAGE_HEIGHT=1064
+IMAGE_WIDTH=10752
+IMAGE_HEIGHT=21504
+
 for file in `ls "originImages"`;do
 	echo "processing ${file}"
 	file_base=$(basename $file .png)
@@ -15,15 +14,15 @@ for file in `ls "originImages"`;do
 		mkdir "${tiles_dir}"
 		echo "mkdir ${tiles_dir} completed"
 	fi
-	for (( i=1; i<=3; i++));do
+	for (( i=1; i<=7; i++));do
 		echo "processing ${file} scale ${i}"
-		((level= 4 - i))
+		((level= 7 - i))
 		((scale= 2 ** (i-1)))
 		((width= $IMAGE_WIDTH / $scale))
 		((height= $IMAGE_HEIGHT / $scale))
 		resizeFormat="${width}x${height}"
 		echo $resizeFormat
-		convert "originImages/${file}" -resize $resizeFormat -crop 256x256 -set filename:tile ./${tiles_dir}/${level}-%[fx:page.x/256]-%[fx:page.y/256] %[filename:tile].png
+		convert "originImages/${file}" -resize $resizeFormat -crop 512x512 -set filename:tile ./${tiles_dir}/${level}-%[fx:page.x/512]-%[fx:page.y/512] %[filename:tile].png
 		echo "complete ${file} scale ${i}"
 	done
 	echo "complete ${file}"
